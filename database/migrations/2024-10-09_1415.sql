@@ -62,7 +62,7 @@ CREATE TABLE llamadas_emergencia (
     tipo_emergencia ENUM('accidente', 'incendio', 'robo', 'emergencia médica', 'otro') NOT NULL,
     telefono VARCHAR(20) NOT NULL, -- teléfono del cliente
     resolucion ENUM('grúa', 'asistencia en accidente', 'compra de combustible', 'batería', 'otro'),
-    estado ENUM('pendiente', 'completada', 'cancelada') DEFAULT 'pendiente',
+    estado ENUM('pendiente', 'completada', 'cancelada') DEFAULT 'pendiente' NOT NULL,
     razon_cancelacion TEXT,
     fecha_llamada DATE, -- fecha de la llamada
     hora_llamada TIME, -- hora de la llamada
