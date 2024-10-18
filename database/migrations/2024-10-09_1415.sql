@@ -25,9 +25,9 @@ CREATE TABLE usuarios (
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- Crear tabla 'operadores' para gestionar los agentes del sistema
+-- Crear tabla 'operadores' para gestionar los operadores del sistema
 CREATE TABLE operadores (
-    id_agente INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     codigo_empleado INT NOT NULL,
@@ -41,7 +41,8 @@ CREATE TABLE operadores (
 
 -- Crear tabla 'clientes' para gestionar los clientes del sistema
 CREATE TABLE clientes (
-    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL UNIQUE, -- Asegurar que un usuario solo puede ser un cliente
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     telefono VARCHAR(20) NOT NULL,
@@ -49,7 +50,8 @@ CREATE TABLE clientes (
     email VARCHAR(255) NOT NULL,
     status ENUM('inactivo', 'activo') NOT NULL, -- 0: inactivo, 1: activo
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 ) ENGINE=InnoDB;
 
 -- Crear tabla 'llamadas_emergencia' para almacenar las llamadas de emergencia
@@ -70,6 +72,6 @@ CREATE TABLE llamadas_emergencia (
     observaciones TEXT, -- campo para observaciones adicionales
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (operador_id) REFERENCES operadores(id_agente),
-    FOREIGN KEY (cliente_id) REFERENCES clientes(id_cliente)
+    FOREIGN KEY (operador_id) REFERENCES operadores(id),
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
 ) ENGINE=InnoDB;
