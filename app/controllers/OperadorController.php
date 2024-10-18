@@ -114,8 +114,10 @@ class OperadorController
 			}
 		} else {
 			$error = null;
-			$llamada = $this->llamada->getById($_GET['id']);
-			$cliente = $this->cliente->getById($llamada['cliente_id']);
+			$this->llamada->id = $_GET['id'];
+			$llamada = $this->llamada->getById();
+			$this->cliente->id = $llamada['cliente_id'];
+			$cliente = $this->cliente->getById();
 			$clientes = $this->cliente->getAll();
 
 			//error si no hay operador
