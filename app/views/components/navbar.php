@@ -47,8 +47,18 @@ $userName = isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre'] : n
 <?php if ($isLogged) : ?>
 	<div class="bg-gray-800 text-white text-center py-2">
 		Hola, <?php echo $userName; ?>
-		<?php if ($role === 'admin') : ?>
-			<span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Admin</span>
-		<?php endif; ?>
+		<?php switch ($role):
+			case 'admin': ?>
+				<span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Admin</span>
+				<?php break; ?>
+			<?php
+			case 'operador': ?>
+				<span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Operador</span>
+				<?php break; ?>
+			<?php
+			default: ?>
+				<span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-900 dark:text-gray-300">Cliente</span>
+				<?php break; ?>
+		<?php endswitch; ?>
 	</div>
 <?php endif; ?>

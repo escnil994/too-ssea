@@ -40,6 +40,16 @@ class Operador
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
+	public function getByUserId()
+	{
+		$query = 'SELECT * FROM ' . $this->table . ' WHERE id_usuario = :id_usuario LIMIT 1';
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(':id_usuario', $this->id_usuario);
+		$stmt->execute();
+
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
 	// Método para crear un nuevo operador
 	public function create()
 	{

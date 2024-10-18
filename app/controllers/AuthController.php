@@ -30,6 +30,21 @@ class AuthController
 		$usuarioLogueado = $usuario->login();
 		if ($usuarioLogueado) {
 			session_start();
+			if ($usuarioLogueado['rol'] === 'operador') {
+				require_once __DIR__ . '/../models/Operador.php';
+				$operador = new Operador($this->db);
+				$operador->id_usuario = $usuarioLogueado['id'];
+				$operadorLogueado = $operador->getByUserId();
+				if ($operadorLogueado) {
+					$_SESSION['operador_id'] = $operadorLogueado['id'];
+					header('Location: /dashboard');
+				} else {
+					$error = 'Operador no encontrado';
+					session_unset();
+					session_destroy();
+					header('Location: /');
+				}
+			}
 			$_SESSION['usuario_id'] = $usuarioLogueado['id'];
 			$_SESSION['usuario_correo'] = $usuarioLogueado['correo'];
 			$_SESSION['usuario_nombre'] = $usuarioLogueado['nombre'];
