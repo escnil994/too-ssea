@@ -66,4 +66,87 @@ class OperadorController
 			require_once __DIR__ . '/../views/atender-llamada.php';
 		}
 	}
+
+	public function darSeguimientoLlamada()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->llamada->id = $_POST['id'];
+			$this->llamada->resolucion = $_POST['resolucion'];
+			$this->llamada->observaciones = $_POST['observaciones'];
+			$this->llamada->estado = $_POST['estado'];
+
+			if ($this->llamada->update()) {
+				header('Location: /llamadas-atendidas');
+			} else {
+				echo "Error al dar seguimiento a la llamada";
+			}
+		} else {
+			$error = null;
+			$llamada = $this->llamada->getById($_GET['id']);
+			$cliente = $this->cliente->getById($llamada['cliente_id']);
+
+			//error si no hay operador
+			if (!$this->operador->id) {
+				$error = 'Operador no encontrado';
+			}
+			require_once __DIR__ . '/../views/seguimiento-llamada.php';
+		}
+	}
+
+	public function editarLlamada()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->llamada->id = $_POST['id'];
+			$this->llamada->fecha_llamada = $_POST['fecha_llamada'];
+			$this->llamada->hora_llamada = $_POST['hora_llamada'];
+			$this->llamada->duracion = $_POST['duracion'];
+			$this->llamada->cliente_id = $_POST['cliente_id'];
+			$this->llamada->telefono = $_POST['telefono'];
+			$this->llamada->tipo_emergencia = $_POST['tipo_emergencia'];
+			$this->llamada->resolucion = $_POST['resolucion'];
+			$this->llamada->observaciones = $_POST['observaciones'];
+			$this->llamada->estado = 'pendiente';
+
+			if ($this->llamada->update()) {
+				header('Location: /llamadas-atendidas');
+			} else {
+				echo "Error al editar la llamada";
+			}
+		} else {
+			$error = null;
+			$llamada = $this->llamada->getById($_GET['id']);
+			$cliente = $this->cliente->getById($llamada['cliente_id']);
+			$clientes = $this->cliente->getAll();
+
+			//error si no hay operador
+			if (!$this->operador->id) {
+				$error = 'Operador no encontrado';
+			}
+			require_once __DIR__ . '/../views/editar-llamada.php';
+		}
+	}
+
+	public function  cancelarLlamada()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->llamada->id = $_POST['id'];
+			$this->llamada->estado = 'cancelada';
+
+			if ($this->llamada->update()) {
+				header('Location: /llamadas-atendidas');
+			} else {
+				echo "Error al cancelar la llamada";
+			}
+		} else {
+			$error = null;
+			$llamada = $this->llamada->getById($_GET['id']);
+			$cliente = $this->cliente->getById($llamada['cliente_id']);
+
+			//error si no hay operador
+			if (!$this->operador->id) {
+				$error = 'Operador no encontrado';
+			}
+			require_once __DIR__ . '/../views/cancelar-llamada.php';
+		}
+	}
 }
