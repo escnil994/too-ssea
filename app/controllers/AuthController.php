@@ -8,7 +8,7 @@ class AuthController
 		$this->db = (new Database())->connect();
 	}
 
-	public function showLoginForm()
+	public function mostrarLogin()
 	{
 		session_start();
 		if (isset($_SESSION['usuario_id'])) {

@@ -22,7 +22,7 @@ switch ($uri) {
 		$authController = new AuthController();
 		switch ($_SERVER['REQUEST_METHOD']) {
 			case 'GET':
-				$authController->showLoginForm();
+				$authController->mostrarLogin();
 				break;
 			case 'POST':
 				$authController->login();
@@ -42,7 +42,7 @@ switch ($uri) {
 			case 'POST':
 				require_once __DIR__ . '/../app/controllers/AuthController.php';
 				$authController = new AuthController();
-				$authController->register();
+				$authController->registrar();
 				break;
 		}
 		break;
