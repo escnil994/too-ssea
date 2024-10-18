@@ -7,9 +7,9 @@ require_once __DIR__ . '/components/header.php';
 	<main class="w-96">
 		<h2 class="text-center">Register</h2>
 		<form action="/register" method="POST">
-			<input type="text" name="name" placeholder="Name" required>
-			<input type="email" name="email" placeholder="Email" required>
-			<input type="password" name="password" placeholder="Password" required>
+			<input type="text" name="nombre" placeholder="Name" required>
+			<input type="email" name="correo" placeholder="Email" required>
+			<input type="password" name="contrasena" placeholder="Password" required>
 			<button type="submit">Registrarse</button>
 		</form>
 		<p class="text-center">

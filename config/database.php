@@ -2,9 +2,9 @@
 class Database
 {
 	private $host = '127.0.0.1';
-	private $db_name = 'php_mvc';
+	private $db_name = 'ssea';
 	private $username = 'root';
-	private $password = 'brandon.parrillas@ambiente.gob.sv';
+	private $password = 'root';
 	public $conn;
 
 	public function connect()

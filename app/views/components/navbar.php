@@ -1,7 +1,7 @@
 <?php
-$isLogged =  isset($_SESSION['user_id']);
-$role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
-$userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : null;
+$isLogged =  isset($_SESSION['usuario_id']);
+$role = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : null;
+$userName = isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre'] : null;
 ?>
 
 <header class="bg-white shadow sticky top-0">

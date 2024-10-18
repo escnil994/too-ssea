@@ -11,7 +11,7 @@ class AuthController
 	public function showLoginForm()
 	{
 		session_start();
-		if (isset($_SESSION['user_id'])) {
+		if (isset($_SESSION['usuario_id'])) {
 			header('Location: /dashboard');
 		} else {
 			require_once __DIR__ . '/../views/login.php';
@@ -20,45 +20,45 @@ class AuthController
 
 	public function login()
 	{
-		$email = $_POST['email'];
-		$password = $_POST['password'];
+		$correo = $_POST['correo'];
+		$contrasena = $_POST['contrasena'];
 
 		require_once __DIR__ . '/../models/User.php';
-		$user = new User($this->db);
-		$user->email = $email;
-		$user->password = $password;
-		$loggedInUser = $user->login();
-		if ($loggedInUser) {
+		$usuario = new Usuario($this->db);
+		$usuario->correo = $correo;
+		$usuario->contrasena = $contrasena;
+		$usuarioLogueado = $usuario->login();
+		if ($usuarioLogueado) {
 			session_start();
-			$_SESSION['user_id'] = $loggedInUser['id'];
-			$_SESSION['user_email'] = $loggedInUser['email'];
-			$_SESSION['user_name'] = $loggedInUser['name'];
-			$_SESSION['user_role'] = $loggedInUser['role'];
+			$_SESSION['usuario_id'] = $usuarioLogueado['id'];
+			$_SESSION['usuario_correo'] = $usuarioLogueado['correo'];
+			$_SESSION['usuario_nombre'] = $usuarioLogueado['nombre'];
+			$_SESSION['usuario_rol'] = $usuarioLogueado['rol'];
 			header('Location: /');
 		} else {
-			$error = 'Invalid login credentials';
+			$error = 'Credenciales de acceso inválidas';
 			require_once __DIR__ . '/../views/login.php';
 		}
 	}
 
-	public function register()
+	public function registrar()
 	{
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$role = 'user';
+		$nombre = $_POST['nombre'];
+		$correo = $_POST['correo'];
+		$contrasena = $_POST['contrasena'];
+		$rol = 'cliente';
 
 		require_once __DIR__ . '/../models/User.php';
-		$user = new User($this->db);
-		$user->name = $name;
-		$user->email = $email;
-		$user->password = $password;
-		$user->role = $role;
+		$usuario = new Usuario($this->db);
+		$usuario->nombre = $nombre;
+		$usuario->correo = $correo;
+		$usuario->contrasena = $contrasena;
+		$usuario->rol = $rol;
 
-		if ($user->register()) {
+		if ($usuario->registrar()) {
 			header('Location: /login');
 		} else {
-			$error = 'Error registering user';
+			$error = 'Error al registrar al usuario';
 			require_once __DIR__ . '/../views/register.php';
 		}
 	}

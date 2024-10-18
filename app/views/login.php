@@ -7,8 +7,8 @@ require_once __DIR__ . '/components/header.php';
 	<main class="w-96">
 		<h2 class="text-center">Login</h2>
 		<form action="/login" method="POST">
-			<input type="email" name="email" placeholder="Email" required>
-			<input type="password" name="password" placeholder="Password" required>
+			<input type="email" name="correo" placeholder="Email" required>
+			<input type="password" name="contrasena" placeholder="Password" required>
 			<button type="submit">Login</button>
 		</form>
 		<p class="text-center">

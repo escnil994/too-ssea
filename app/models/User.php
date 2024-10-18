@@ -1,12 +1,12 @@
 <?php
-class User
+class Usuario
 {
 	private $conn;
-	private $table = 'users';
-	public $name;
-	public $email;
-	public $password;
-	public $role;
+	private $table = 'usuarios';
+	public $nombre;
+	public $correo;
+	public $contrasena;
+	public $rol;
 
 	public function __construct($db)
 	{
@@ -15,49 +15,48 @@ class User
 
 	public function login()
 	{
-		$query = 'SELECT * FROM ' . $this->table . ' WHERE email = :email LIMIT 1';
+		$query = 'SELECT * FROM ' . $this->table . ' WHERE correo = :correo LIMIT 1';
 		$stmt = $this->conn->prepare($query);
-		$stmt->bindParam(':email', $this->email);
+		$stmt->bindParam(':correo', $this->correo);
 		$stmt->execute();
 
-		$user = $stmt->fetch(PDO::FETCH_ASSOC);
+		$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if ($user && password_verify($this->password, $user['password'])) {
-			return $user;
+		if ($usuario && password_verify($this->contrasena, $usuario['contrasena'])) {
+			return $usuario;
 		}
 
 		return false;
 	}
 
 	// Método para registrar un nuevo usuario
-	public function register()
+	public function registrar()
 	{
 		$showError = false;
 		try {
-			//Validar si el usuario ya existe
-			$query = 'SELECT * FROM ' . $this->table . ' WHERE email = :email LIMIT 1';
+			// Validar si el usuario ya existe
+			$query = 'SELECT * FROM ' . $this->table . ' WHERE correo = :correo LIMIT 1';
 			$stmt = $this->conn->prepare($query);
-			$stmt->bindParam(':email', $this->email);
+			$stmt->bindParam(':correo', $this->correo);
 			$stmt->execute();
 
-			$user = $stmt->fetch(PDO::FETCH_ASSOC);
+			$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			if ($user) {
+			if ($usuario) {
 				$showError = true;
 				echo "El usuario ya existe.";
 				return false;
 			}
 
-			$query = "INSERT INTO users (email, password, name, role, created_at, updated_at) VALUES (:email, :password, :name, :role, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-
+			$query = "INSERT INTO usuarios (correo, contrasena, nombre, rol, creado_en, actualizado_en) VALUES (:correo, :contrasena, :nombre, :rol)";
 			$stmt = $this->conn->prepare($query);
 
 			// Bindear los parámetros
-			$stmt->bindParam(':email', $this->email);
-			$hashed_password = password_hash($this->password, PASSWORD_DEFAULT);
-			$stmt->bindParam(':password',  $hashed_password);
-			$stmt->bindParam(':name', $this->name);
-			$stmt->bindParam(':role', $this->role);
+			$stmt->bindParam(':correo', $this->correo);
+			$hashed_password = password_hash($this->contrasena, PASSWORD_DEFAULT);
+			$stmt->bindParam(':contrasena',  $hashed_password);
+			$stmt->bindParam(':nombre', $this->nombre);
+			$stmt->bindParam(':rol', $this->rol);
 
 			// Ejecutar la consulta
 			if ($stmt->execute()) {

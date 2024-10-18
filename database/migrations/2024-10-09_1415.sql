@@ -10,6 +10,8 @@ CREATE TABLE usuarios (
     nombre VARCHAR(255) NOT NULL,
     rol ENUM('administrador', 'operador', 'gerente', 'cliente') DEFAULT 'operador',
     estado ENUM('activo', 'inactivo') DEFAULT 'activo'
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 -- Crear tabla 'operadores' para gestionar los agentes del sistema
@@ -20,11 +22,9 @@ CREATE TABLE operadores (
     codigo_empleado INT NOT NULL,
     extension_tel INT NOT NULL,
     status ENUM('inactivo', 'activo') NOT NULL, -- 0: inactivo, 1: activo
-    usuario_creacion VARCHAR(255) NOT NULL,
-    fecha_creacion DATE NOT NULL,
-    usuario_modifico VARCHAR(255),
-    fecha_modificacion DATE,
     id_usuario INT NOT NULL UNIQUE, -- Asegurar que un usuario solo puede ser un operador
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 ) ENGINE=InnoDB;
 
@@ -37,10 +37,8 @@ CREATE TABLE clientes (
     dui VARCHAR(20) NOT NULL,
     email VARCHAR(255) NOT NULL,
     status ENUM('inactivo', 'activo') NOT NULL, -- 0: inactivo, 1: activo
-    usuario_creacion VARCHAR(255) NOT NULL,
-    fecha_creacion DATE NOT NULL,
-    usuario_modifico VARCHAR(255),
-    fecha_modificacion DATE
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 -- Crear tabla 'llamadas_emergencia' para almacenar las llamadas de emergencia
@@ -59,6 +57,8 @@ CREATE TABLE llamadas_emergencia (
     calidad_servicio ENUM('mala', 'aceptable', 'Excelente'),
     fecha_confirmacion DATETIME,
     observaciones TEXT, -- campo para observaciones adicionales
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     FOREIGN KEY (operador_id) REFERENCES operadores(id_agente),
     FOREIGN KEY (cliente_id) REFERENCES clientes(id_cliente)
 ) ENGINE=InnoDB;

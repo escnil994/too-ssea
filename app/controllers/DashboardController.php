@@ -11,7 +11,7 @@ class DashboardController
 
 	public function showDashboard()
 	{
-		if (!isset($_SESSION['user_id'])) {
+		if (!isset($_SESSION['usuario_id'])) {
 			header('Location: /login');
 		}
 		require_once __DIR__ . '/../models/Product.php';
