@@ -1,4 +1,4 @@
--- Active: 1726760977043@@127.0.0.1@3306@php_mvc
+-- Active: 1726760977043@@127.0.0.1@3306@ssea
 CREATE DATABASE ssea;
 		DEFAULT CHARACTER SET = 'utf8mb4';
 
@@ -9,7 +9,7 @@ CREATE TABLE usuarios (
     contrasena VARCHAR(255) NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     rol ENUM('administrador', 'operador', 'gerente', 'cliente') DEFAULT 'operador',
-    estado ENUM('activo', 'inactivo') DEFAULT 'activo'
+    estado ENUM('activo', 'inactivo') DEFAULT 'activo',
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
@@ -24,7 +24,7 @@ CREATE TABLE operadores (
     status ENUM('inactivo', 'activo') NOT NULL, -- 0: inactivo, 1: activo
     id_usuario INT NOT NULL UNIQUE, -- Asegurar que un usuario solo puede ser un operador
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 ) ENGINE=InnoDB;
 
@@ -58,7 +58,7 @@ CREATE TABLE llamadas_emergencia (
     fecha_confirmacion DATETIME,
     observaciones TEXT, -- campo para observaciones adicionales
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (operador_id) REFERENCES operadores(id_agente),
     FOREIGN KEY (cliente_id) REFERENCES clientes(id_cliente)
 ) ENGINE=InnoDB;
