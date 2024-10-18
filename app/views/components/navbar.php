@@ -13,8 +13,13 @@ $userName = isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre'] : n
 				<?php if ($role === 'admin') : ?>
 					<a href="/dashboard" class="text-gray-600 hover:text-gray-900 no-underline">Dashboard</a>
 				<?php endif; ?>
+				<?php if ($role === 'operador') : ?>
+					<a href="/atenciones" class="text-gray-600 hover:text-gray-900 no-underline">Atenciones</a>
+					<a href="/atender-llamada" class="text-gray-600 hover:text-gray-900 no-underline">
+						Atender llamada
+					</a>
+				<?php endif; ?>
 				<?php if ($isLogged) : ?>
-					<a href="/productos" class="text-gray-600 hover:text-gray-900 no-underline">Productos</a>
 					<a href="/logout" class="text-gray-600 hover:text-gray-900 no-underline">Logout</a>
 				<?php else : ?>
 					<a href="/login" class="text-gray-600 hover:text-gray-900 no-underline">Login</a>
