@@ -27,9 +27,13 @@ foreach ($usuarios as $usuarioData) {
 	$usuario->rol = $usuarioData['rol'];
 
 	// Registrar el usuario
-	if ($usuario->registrar()) {
-		echo "Usuario {$usuario->correo} registrado con éxito.\n";
-	} else {
-		echo "Error al registrar al usuario {$usuario->correo}.\n";
+	try {
+		if ($usuario->registrar()) {
+			echo "Usuario {$usuario->correo} registrado con éxito.\n";
+		} else {
+			echo "Error al registrar al usuario {$usuario->correo}.\n";
+		}
+	} catch (Exception $e) {
+		echo "Error al registrar al usuario {$usuario->correo}: {$e->getMessage()}\n";
 	}
 }

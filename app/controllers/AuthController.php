@@ -23,7 +23,7 @@ class AuthController
 		$correo = $_POST['correo'];
 		$contrasena = $_POST['contrasena'];
 
-		require_once __DIR__ . '/../models/User.php';
+		require_once __DIR__ . '/../models/Usuario.php';
 		$usuario = new Usuario($this->db);
 		$usuario->correo = $correo;
 		$usuario->contrasena = $contrasena;
@@ -48,7 +48,7 @@ class AuthController
 		$contrasena = $_POST['contrasena'];
 		$rol = 'cliente';
 
-		require_once __DIR__ . '/../models/User.php';
+		require_once __DIR__ . '/../models/Usuario.php';
 		$usuario = new Usuario($this->db);
 		$usuario->nombre = $nombre;
 		$usuario->correo = $correo;

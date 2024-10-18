@@ -48,7 +48,7 @@ class Usuario
 				return false;
 			}
 
-			$query = "INSERT INTO usuarios (correo, contrasena, nombre, rol, creado_en, actualizado_en) VALUES (:correo, :contrasena, :nombre, :rol)";
+			$query = "INSERT INTO usuarios (correo, contrasena, nombre, rol) VALUES (:correo, :contrasena, :nombre, :rol)";
 			$stmt = $this->conn->prepare($query);
 
 			// Bindear los parámetros
@@ -66,7 +66,7 @@ class Usuario
 			return false;
 		} catch (PDOException $e) {
 			// Puedes capturar errores aquí también
-			throw new Exception($showError ? "El usuario ya existe." : "Error al registrar al usuario.");
+			throw new Exception($showError ? $e->getMessage() : "Error al registrar al usuario.");
 			return false;
 		}
 	}

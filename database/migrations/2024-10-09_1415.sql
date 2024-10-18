@@ -1,6 +1,17 @@
--- Active: 1726760977043@@127.0.0.1@3306@ssea
 CREATE DATABASE ssea;
 		DEFAULT CHARACTER SET = 'utf8mb4';
+
+-- Crear usuario 'ssea_user' con acceso completo a la base de datos 'ssea'
+CREATE USER 'ssea_user'@'%' IDENTIFIED BY '12345678';
+
+-- Otorgar todos los privilegios sobre la base de datos 'ssea' al usuario 'ssea_user'
+GRANT ALL PRIVILEGES ON ssea.* TO 'ssea_user'@'%';
+
+-- Aplicar los cambios de privilegios
+FLUSH PRIVILEGES;
+
+-- Mostrar los privilegios otorgados al usuario 'ssea_user' para verificar
+SHOW GRANTS FOR 'ssea_user'@'%';
 
 -- Crear tabla 'usuarios' para gestionar usuarios del sistema
 CREATE TABLE usuarios (

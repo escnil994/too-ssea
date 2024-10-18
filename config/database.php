@@ -3,8 +3,8 @@ class Database
 {
 	private $host = '127.0.0.1';
 	private $db_name = 'ssea';
-	private $username = 'root';
-	private $password = 'root';
+	private $username = 'ssea_user';
+	private $password = '12345678';
 	public $conn;
 
 	public function connect()
