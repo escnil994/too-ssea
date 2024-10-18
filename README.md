@@ -67,6 +67,7 @@ El proyecto sigue la arquitectura MVC:
     ```bash
     php ./database/seeders/user_seeder.php
     php ./database/seeders/cliente_seeder.php
+    php ./database/seeders/operador_seeder.php
     ```
 
 
