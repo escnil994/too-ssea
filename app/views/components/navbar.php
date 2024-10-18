@@ -8,13 +8,13 @@ $userName = isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre'] : n
 	<nav class="container mx-auto px-6 py-0">
 		<div class="flex w-full justify-between">
 			<div class="text-xl font-bold text-gray-800">TOO</div>
-			<div class="hidden md:flex space-x-6">
+			<div class="hidden md:flex space-x-6 text-sm items-center">
 				<a href="/" class="text-gray-600 hover:text-gray-900 no-underline">Home</a>
 				<?php if ($role === 'admin') : ?>
 					<a href="/dashboard" class="text-gray-600 hover:text-gray-900 no-underline">Dashboard</a>
 				<?php endif; ?>
 				<?php if ($role === 'operador') : ?>
-					<a href="/atenciones" class="text-gray-600 hover:text-gray-900 no-underline">Atenciones</a>
+					<a href="/llamadas-atendidas" class="text-gray-600 hover:text-gray-900 no-underline">Atenciones</a>
 					<a href="/atender-llamada" class="text-gray-600 hover:text-gray-900 no-underline">
 						Atender llamada
 					</a>

@@ -26,14 +26,14 @@ class OperadorController
 		$error = null;
 		if ($this->operador->id) {
 			$llamadas = $this->llamada->getByOperator();
-			foreach ($llamadas as $llamada) {
+			foreach ($llamadas as $index => $llamada) {
+				$this->cliente->id = $llamada['cliente_id'];
 				$cliente = $this->cliente->getById($llamada['cliente_id']);
-				$llamada['cliente'] = $cliente['nombre'];
+				$llamadas[$index]['cliente'] = $cliente;
 			}
 		} else {
 			$error = 'Operador no encontrado';
 		}
-		header('Location: /');
 		require_once __DIR__ . '/../views/llamadas-atendidas.php';
 	}
 
@@ -48,9 +48,10 @@ class OperadorController
 			$this->llamada->tipo_emergencia = $_POST['tipo_emergencia'];
 			$this->llamada->resolucion = $_POST['resolucion'];
 			$this->llamada->observaciones = $_POST['observaciones'];
+			$this->llamada->estado = 'pendiente';
 
 			if ($this->llamada->create()) {
-				header('Location: /atender-llamada');
+				header('Location: /llamadas-atendidas');
 			} else {
 				echo "Error al atender la llamada";
 			}

@@ -50,7 +50,7 @@ class LlamadaEmergencia
 	// Método para obtener todas las llamadas atención de un operador
 	public function getByOperator()
 	{
-		$query = 'SELECT * FROM ' . $this->table . ' WHERE operador_id = :operador_id ORDER BY creado_en DESC';
+		$query = 'SELECT * FROM ' . $this->table . ' WHERE operador_id = :operador_id ORDER BY fecha_llamada DESC, hora_llamada DESC';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(':operador_id', $this->operador_id);
 		$stmt->execute();
