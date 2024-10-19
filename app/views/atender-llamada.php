@@ -85,6 +85,7 @@ $tipoResolucion = [
 							<?php echo ucfirst($tipo); ?>
 						</option>
 					<?php endforeach; ?>
+				</select>
 			</label>
 			<label>
 				Observaciones

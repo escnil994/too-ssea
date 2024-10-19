@@ -10,7 +10,6 @@ class AuthController
 
 	public function mostrarLogin()
 	{
-		session_start();
 		if (isset($_SESSION['usuario_id'])) {
 			header('Location: /dashboard');
 		} else {
@@ -29,7 +28,6 @@ class AuthController
 		$usuario->contrasena = $contrasena;
 		$usuarioLogueado = $usuario->login();
 		if ($usuarioLogueado) {
-			session_start();
 			if ($usuarioLogueado['rol'] === 'operador') {
 				require_once __DIR__ . '/../models/Operador.php';
 				$operador = new Operador($this->db);
@@ -80,7 +78,6 @@ class AuthController
 
 	public function logout()
 	{
-		session_start();
 		session_unset();
 		session_destroy();
 		header('Location: /');
