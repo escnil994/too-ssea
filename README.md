@@ -74,7 +74,7 @@ El proyecto sigue la arquitectura MVC:
 5. **Iniciar el servidor PHP:**
 
    ```bash
-   php -S localhost:8000 -t public
+   php -S localhost:8001 -t public
    ```
 
 ## Licencia
