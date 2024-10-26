@@ -128,4 +128,41 @@ class LlamadaEmergencia
 
 		return false;
 	}
+
+	// Método para finalizar el seguimiento de una llamada de emergencia
+	public function seguimiento()
+	{
+		$query = 'UPDATE ' . $this->table . ' SET estado = :estado, observaciones = :observaciones, calidad_servicio = :calidad_servicio WHERE id = :id';
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindParam(':id', $this->id);		
+		$stmt->bindParam(':estado', $this->estado);
+		$stmt->bindParam(':observaciones', $this->observaciones);
+		$stmt->bindParam(':calidad_servicio', $this->calidad_servicio);
+
+
+		if ($stmt->execute()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	// Método para cancelar una llamada de emergencia
+	public function cancel()
+	{
+		$query = 'UPDATE ' . $this->table . ' SET estado = :estado, razon_cancelacion = :razon_cancelacion WHERE id = :id';
+		$stmt = $this->conn->prepare($query);
+
+		// Bind de los parámetros
+		$stmt->bindParam(':estado', $this->estado);
+		$stmt->bindParam(':razon_cancelacion', $this->razon_cancelacion);
+		$stmt->bindParam(':id', $this->id);
+
+		if ($stmt->execute()) {
+			return true;
+		}
+
+		return false;
+	}
 }

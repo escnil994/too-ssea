@@ -70,18 +70,19 @@ class OperadorController
 	public function darSeguimientoLlamada()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$this->llamada->id = $_POST['id'];
-			$this->llamada->resolucion = $_POST['resolucion'];
+			$this->llamada->id = $_GET['id'];
+			$this->llamada->calidad_servicio = $_POST['calidad_servicio'];
 			$this->llamada->observaciones = $_POST['observaciones'];
-			$this->llamada->estado = $_POST['estado'];
+			$this->llamada->estado = 'completada';
 
-			if ($this->llamada->update()) {
+			if ($this->llamada->seguimiento()) {
 				header('Location: /llamadas-atendidas');
 			} else {
 				echo "Error al dar seguimiento a la llamada";
 			}
 		} else {
-			$error = null;
+			$error = null;			
+			$this->llamada->id = $_GET['id'];
 			$llamada = $this->llamada->getById($_GET['id']);
 			$cliente = $this->cliente->getById($llamada['cliente_id']);
 
@@ -128,19 +129,21 @@ class OperadorController
 		}
 	}
 
-	public function  cancelarLlamada()
+	public function cancelarLlamada()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$this->llamada->id = $_POST['id'];
+			$this->llamada->id = $_GET['id'];
 			$this->llamada->estado = 'cancelada';
+			$this->llamada->razon_cancelacion = $_POST['comentario_cancel'];
 
-			if ($this->llamada->update()) {
+			if ($this->llamada->cancel()) {
 				header('Location: /llamadas-atendidas');
 			} else {
 				echo "Error al cancelar la llamada";
 			}
 		} else {
 			$error = null;
+			$this->llamada->id = $_GET['id'];
 			$llamada = $this->llamada->getById($_GET['id']);
 			$cliente = $this->cliente->getById($llamada['cliente_id']);
 

@@ -40,6 +40,8 @@ date_default_timezone_set('America/El_Salvador');
 						<td class="text-xs"><?php echo $llamada['observaciones']; ?></td>
 						<td><?php echo ucfirst($llamada['estado']); ?></td>
 						<td>
+							<?php 
+								if(strtolower($llamada['estado']) == 'pendiente'){ ?>
 							<div class="flex gap-2">
 								<abbr class="transition-opacity opacity-0 group-hover:opacity-100" title="Seguimiento">
 									<a href="/seguimiento-llamada?id=<?php echo $llamada['id']; ?>" class="text-blue-500">
@@ -63,6 +65,7 @@ date_default_timezone_set('America/El_Salvador');
 									</a>
 								</abbr>
 							</div>
+							<?php } ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
