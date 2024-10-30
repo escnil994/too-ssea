@@ -8,8 +8,9 @@ require_once __DIR__ . '/components/header.php';
 
 	<section class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20">
 		<div class="container mx-auto px-6 text-center">
-			<h1 class="text-4xl md:text-6xl font-bold mb-4">MVC</h1>
-			<p class="text-xl md:text-2xl mb-8 text-gray-100">Modelo Vista Controlador</p>
+			<h1 class="text-4xl md:text-6xl font-bold mb-4">SSEA</h1>
+			<p class="text-xl md:text-2xl mb-8 text-gray-100">Sistema de llamadas de Seguros
+				para la empresa Atlantida</p>
 			<a href="<?= $isLogged ? ($role === 'admin' ? '/dashboard' : '/productos') : '/login' ?>" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 inline-flex items-center no-underline">
 				Empezar
 				<i class="fas fa-arrow-right ml-2"></i>
@@ -25,18 +26,18 @@ require_once __DIR__ . '/components/header.php';
 					<div class="text-indigo-500 mb-4">
 						<i class="fas fa-bolt text-4xl"></i>
 					</div>
-					<h3 class="text-xl font-semibold mb-2 text-gray-600">Inicio de sesión</h3>
+					<h3 class="text-xl font-semibold mb-2 text-gray-600">Autenticación y autorización</h3>
 					<p class="text-gray-600">
-						Permite a los usuarios iniciar sesión en la aplicación.
+						Permite a los usuarios iniciar sesión y acceder a las funciones según su rol.
 					</p>
 				</div>
 				<div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition duration-300">
 					<div class="text-indigo-500 mb-4">
 						<i class="fas fa-shield-alt text-4xl"></i>
 					</div>
-					<h3 class="text-xl font-semibold mb-2 text-gray-600">Productos</h3>
+					<h3 class="text-xl font-semibold mb-2 text-gray-600">Atender llamadas</h3>
 					<p class="text-gray-600">
-						Permite a los usuarios ver, agregar, editar y eliminar productos.
+						Registrar y atender llamadas de seguros de la empresa Atlantida.
 					</p>
 				</div>
 				<div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition duration-300">
@@ -44,10 +45,10 @@ require_once __DIR__ . '/components/header.php';
 						<i class="fas fa-smile text-4xl"></i>
 					</div>
 					<h3 class="text-xl font-semibold mb-2 text-gray-600">
-						Interfaz intuitiva
+						Seguimiento de llamadas
 					</h3>
 					<p class="text-gray-600">
-						Interfaz de usuario fácil de usar para una mejor experiencia.
+						Permite a los usuarios ver el historial de llamadas y gestionar su estado.
 					</p>
 				</div>
 			</div>
@@ -56,10 +57,10 @@ require_once __DIR__ . '/components/header.php';
 
 	<footer class="bg-gray-800 text-white py-8">
 		<div class="container mx-auto px-6">
-			<h4 class="text-lg font-bold mb-4 text-center">Tecnología Orientada a Objetos</h4>
+			<h4 class="text-lg font-bold mb-4 text-center">TOO115</h4>
 			<p class="text-gray-400 text-center">Tecnología Orientada a Objetos</p>
-			<div class="border-t border-gray-700 mt-8 pt-8 text-sm text-center">
-				<p>&copy; 2024 Universidad de El Salvador.</p>
+			<div class="border-t border-gray-400 text-sm text-center">
+				<p class="text-gray-500">&copy; 2024 Universidad de El Salvador.</p>
 			</div>
 		</div>
 	</footer>

@@ -20,7 +20,7 @@ $userName = isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre'] : n
 					</a>
 				<?php endif; ?>
 				<?php if ($isLogged) : ?>
-					<a href="/logout" class="text-gray-600 hover:text-gray-900 no-underline">Logout</a>
+					<?php require_once __DIR__ . '/userprofile.php'; ?>
 				<?php else : ?>
 					<a href="/login" class="text-gray-600 hover:text-gray-900 no-underline">Login</a>
 				<?php endif; ?>
@@ -49,6 +49,7 @@ $userName = isset($_SESSION['usuario_nombre']) ? $_SESSION['usuario_nombre'] : n
 		</div>
 	</nav>
 </header>
+
 <?php if ($isLogged) : ?>
 	<div class="bg-gray-800 text-white text-center py-2">
 		Hola, <?php echo $userName; ?>
