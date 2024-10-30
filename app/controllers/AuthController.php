@@ -17,6 +17,7 @@ class AuthController
 		}
 	}
 
+
 	public function login()
 	{
 		$correo = $_POST['correo'];
@@ -27,33 +28,41 @@ class AuthController
 		$usuario->correo = $correo;
 		$usuario->contrasena = $contrasena;
 		$usuarioLogueado = $usuario->login();
+
 		if ($usuarioLogueado) {
-			if ($usuarioLogueado['rol'] === 'operador') {
-				require_once __DIR__ . '/../models/Operador.php';
-				$operador = new Operador($this->db);
-				$operador->id_usuario = $usuarioLogueado['id'];
-				$operadorLogueado = $operador->getByUserId();
-				if ($operadorLogueado) {
-					$_SESSION['operador_id'] = $operadorLogueado['id'];
-					header('Location: /dashboard');
-				} else {
-					$error = 'Operador no encontrado';
-					session_unset();
-					session_destroy();
-					header('Location: /');
-				}
-			}
 			$_SESSION['usuario_id'] = $usuarioLogueado['id'];
 			$_SESSION['usuario_correo'] = $usuarioLogueado['correo'];
 			$_SESSION['usuario_nombre'] = $usuarioLogueado['nombre'];
 			$_SESSION['usuario_rol'] = $usuarioLogueado['rol'];
-			header('Location: /');
+
+			if (in_array($usuarioLogueado['rol'], ['operador', 'gerente', 'administrador'])) {
+				$rolClass = ucfirst($usuarioLogueado['rol']);
+				require_once __DIR__ . "/../models/{$rolClass}.php";
+				$rolInstance = new $rolClass($this->db);
+				$rolInstance->id_usuario = $usuarioLogueado['id'];
+				$rolLogueado = $rolInstance->getByUserId();
+
+				if ($rolLogueado) {
+
+					$_SESSION[$usuarioLogueado['rol'].'_id'] = $rolLogueado['id'];
+					header('Location: /');
+					exit();
+				} else {
+					$error = "{$rolClass} no encontrado";
+					session_unset();
+					session_destroy();
+					header('Location: /');
+					exit();
+				}
+			} else {
+				header('Location: /');
+				exit();
+			}
 		} else {
 			$error = 'Credenciales de acceso inválidas';
 			require_once __DIR__ . '/../views/login.php';
 		}
 	}
-
 	public function registrar()
 	{
 		$nombre = $_POST['nombre'];

@@ -104,6 +104,80 @@ switch ($uri) {
 		$operadorController = new OperadorController();
 		$operadorController->cancelarLlamada();
 		break;
+
+	case '/reportes':
+		auth();
+		role('gerente');
+		require_once __DIR__ . '/../app/controllers/GerenteController.php';
+		$gerenteController = new GerenteController();
+		$gerenteController->crearReportes();
+		break;
+
+
+
+	case '/generar-reporte':
+		auth();
+		role('gerente');
+		require_once __DIR__ . '/../app/controllers/GerenteController.php';
+		$gerenteController = new GerenteController();
+		$gerenteController->obtenerLlamadas();
+		break;
+	case '/seguimiento-llamadas-pendientes':
+		auth();
+		role('gerente');
+		require_once __DIR__ . '/../app/controllers/GerenteController.php';
+		$gerenteController = new GerenteController();
+		$gerenteController->obtenerLlamadasPorEstado('pendiente');
+		break;
+
+	case '/seguimiento-llamadas-atendidas':
+		auth();
+		role('gerente');
+		require_once __DIR__ . '/../app/controllers/GerenteController.php';
+		$gerenteController = new GerenteController();
+		$gerenteController->obtenerLlamadasPorEstado('completada');
+		break;
+
+
+	case '/seguimiento-llamadas-canceladas':
+		auth();
+		role('gerente');
+		require_once __DIR__ . '/../app/controllers/GerenteController.php';
+		$gerenteController = new GerenteController();
+		$gerenteController->obtenerLlamadasPorEstado('cancelada');
+		break;
+
+
+	case '/administrar-usuarios':
+		auth();
+		role('administrador');
+		require_once __DIR__ . '/../app/views/administrar-usuarios.php';
+		break;
+
+	case '/buscar-usuarios':
+		auth();
+		role('administrador');
+		require_once __DIR__ . '/../app/controllers/AdministradorController.php';
+		$administradorController = new AdministradorController();
+		$administradorController->getUsers();
+		break;
+
+	case '/editar-usuario':
+		auth();
+		role('administrador');
+		require_once __DIR__ . '/../app/views/editar-usuario.php';
+		break;
+
+	case '/modificar-usuario':
+		auth();
+		role('administrador');
+		require_once __DIR__ . '/../app/controllers/AdministradorController.php';
+		$administradorController = new AdministradorController();
+		$administradorController->GuardarCambios();
+		break;
+
+
+
 	default:
 		http_response_code(404);
 		require_once __DIR__ . '/../app/views/404.php';

@@ -135,7 +135,7 @@ class LlamadaEmergencia
 		$query = 'UPDATE ' . $this->table . ' SET estado = :estado, observaciones = :observaciones, calidad_servicio = :calidad_servicio WHERE id = :id';
 		$stmt = $this->conn->prepare($query);
 
-		$stmt->bindParam(':id', $this->id);		
+		$stmt->bindParam(':id', $this->id);
 		$stmt->bindParam(':estado', $this->estado);
 		$stmt->bindParam(':observaciones', $this->observaciones);
 		$stmt->bindParam(':calidad_servicio', $this->calidad_servicio);
@@ -165,4 +165,76 @@ class LlamadaEmergencia
 
 		return false;
 	}
+
+
+
+
+
+	public function getAllByStatus($estado)
+	{
+		$query = 'SELECT t1.*, CONCAT(t2.nombre, \' \', t2.apellido)  AS operador_nombre, t2.codigo_empleado AS codigo_empleado 
+              FROM ' . $this->table . ' t1 
+              JOIN operadores t2 ON t1.operador_id = t2.id 
+              WHERE t1.estado = :estado 
+              ORDER BY t1.creado_en DESC';
+
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindValue(':estado', $estado);
+		$stmt->execute();
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+	public function ObtenerDatosUnicosDeLlamada($column): mixed
+	{
+		$query = "SELECT DISTINCT " . $column . " FROM " . $this->table;
+
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+	public function obtenerLlamadasFiltradas($filters = [])
+	{
+		$query = 'SELECT t1.*, CONCAT(t2.nombre, \' \', t2.apellido) AS operador_nombre, t2.codigo_empleado AS codigo_empleado,
+						 t3.nombre AS cliente_nombre, t3.apellido AS cliente_apellido
+				  FROM ' . $this->table . ' t1
+				  JOIN operadores t2 ON t1.operador_id = t2.id
+				  JOIN clientes t3 ON t1.cliente_id = t3.id
+				  WHERE 1=1';
+
+		if (!empty($filters['fecha_inicio']) && !empty($filters['fecha_fin'])) {
+			$query .= ' AND t1.fecha_llamada BETWEEN :fecha_inicio AND :fecha_fin';
+			$fechaInicio = $filters['fecha_inicio'];
+			$fechaFin = $filters['fecha_fin'];
+			unset($filters['fecha_inicio'], $filters['fecha_fin']);
+		}
+
+		foreach ($filters as $key => $value) {
+			$query .= " AND t1.$key = :$key";
+		}
+
+		$query .= ' ORDER BY t1.creado_en DESC';
+
+		$stmt = $this->conn->prepare($query);
+
+		if (isset($fechaInicio) && isset($fechaFin)) {
+			$stmt->bindValue(':fecha_inicio', $fechaInicio);
+			$stmt->bindValue(':fecha_fin', $fechaFin);
+		}
+
+		foreach ($filters as $key => $value) {
+			$stmt->bindValue(":$key", $value);
+		}
+
+		$stmt->execute();
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+
 }

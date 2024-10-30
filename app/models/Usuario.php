@@ -54,7 +54,7 @@ class Usuario
 			// Bindear los parámetros
 			$stmt->bindParam(':correo', $this->correo);
 			$hashed_password = password_hash($this->contrasena, PASSWORD_DEFAULT);
-			$stmt->bindParam(':contrasena',  $hashed_password);
+			$stmt->bindParam(':contrasena', $hashed_password);
 			$stmt->bindParam(':nombre', $this->nombre);
 			$stmt->bindParam(':rol', $this->rol);
 
@@ -70,4 +70,7 @@ class Usuario
 			return false;
 		}
 	}
+
+	
+
 }

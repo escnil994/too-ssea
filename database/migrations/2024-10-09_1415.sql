@@ -13,6 +13,8 @@ FLUSH PRIVILEGES;
 -- Mostrar los privilegios otorgados al usuario 'ssea_user' para verificar
 SHOW GRANTS FOR 'ssea_user'@'%';
 
+
+USE ssea;
 -- Crear tabla 'usuarios' para gestionar usuarios del sistema
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -74,4 +76,31 @@ CREATE TABLE llamadas_emergencia (
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (operador_id) REFERENCES operadores(id),
     FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+) ENGINE=InnoDB;
+
+CREATE TABLE gerentes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    codigo_empleado INT NOT NULL,
+    extension_tel INT NOT NULL,
+    status ENUM('inactivo', 'activo') NOT NULL, -- 0: inactivo, 1: activo
+    id_usuario INT NOT NULL UNIQUE, -- Asegurar que un usuario solo puede ser un operador
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    codigo_empleado INT NOT NULL,
+    extension_tel INT NOT NULL,
+    status ENUM('inactivo', 'activo') NOT NULL, -- 0: inactivo, 1: activo
+    id_usuario INT NOT NULL UNIQUE, -- Asegurar que un usuario solo puede ser un operador
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 ) ENGINE=InnoDB;

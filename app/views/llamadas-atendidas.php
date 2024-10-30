@@ -22,6 +22,7 @@ date_default_timezone_set('America/El_Salvador');
 					<th>Teléfono</th>
 					<th>Tipo de emergencia</th>
 					<th>Resolución</th>
+					<th>Operador</th>
 					<th>Observaciones</th>
 					<th>Estado</th>
 					<th></th>
@@ -37,6 +38,8 @@ date_default_timezone_set('America/El_Salvador');
 						<td><?php echo $llamada['telefono']; ?></td>
 						<td><?php echo ucfirst($llamada['tipo_emergencia']); ?></td>
 						<td><?php echo ucfirst($llamada['resolucion']); ?></td>
+						<?php if ($role === 'gerente'): ?>
+							<td><?php echo $llamada['operador_nombre']; ?></td> <?php endif; ?>
 						<td class="text-xs"><?php echo $llamada['observaciones']; ?></td>
 						<td><?php echo ucfirst($llamada['estado']); ?></td>
 						<td>
