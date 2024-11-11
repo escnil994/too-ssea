@@ -65,9 +65,10 @@ El proyecto sigue la arquitectura MVC:
     > Opcionalmente puedes ejecutar los seeders para poblar la base de datos con datos de prueba.
     
     ```bash
-    php ./database/seeders/user_seeder.php
     php ./database/seeders/cliente_seeder.php
     php ./database/seeders/operador_seeder.php
+    php ./database/seeders/gerente_seeder.php
+    php ./database/seeders/administrador_seeder.php
     ```
 
 
